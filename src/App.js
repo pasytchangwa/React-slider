@@ -1,24 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import data from './data';
+import Review from "./Review";
 
 function App() {
+  const [reviews, setReviews] = useState(data);
+  const [index, setIndex] = useState(0);
+
+
+  const handleClickRight = () => {
+    setIndex((oldIndex) => {
+      let index = oldIndex + 1
+      if (index > reviews.length - 1) {
+        index = 0
+      }
+      return index
+    });
+  }
+  const handleClickLeft = () => {
+      setIndex((oldIndex) => {
+        let index = oldIndex - 1;
+        if (index < 0) {
+          index = reviews.length - 1;
+        }
+        return index;
+      });
+  }
+
+  useEffect(() => {
+    let slider = setInterval(() => {
+      setIndex((oldIndex) => {
+        let index = oldIndex + 1;
+        if (index > reviews.length - 1) {
+          index = 0;
+        }
+        return index
+      })
+    }, 5000)
+    return () => {
+      clearInterval(slider)
+    }
+  }, [index, reviews.length])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <section className="section">
+        <div className="title">
+          <h2>
+            <span>/</span> Reviews
+          </h2>
+        </div>
+        <Review reviews={reviews} index={index} handleClickLeft={handleClickLeft} handleClickRight={handleClickRight}/>
+      </section> 
   );
 }
 

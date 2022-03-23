@@ -6,6 +6,7 @@
 
 ![slider](slider.PNG)
 
+[LIVE DEMO](https://react-slider-syl.netlify.app/)
 
 ## Built With
 
